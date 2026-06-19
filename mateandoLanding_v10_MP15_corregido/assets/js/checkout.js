@@ -52,15 +52,11 @@ function numberForEmail(value) {
 function getTotals(method) {
   const book = STORE_CONFIG.BOOK_PRICE;
   const shipping = STORE_CONFIG.SHIPPING_PRICE;
-  const subtotal = book + shipping;
-
-  // IMPORTANTE: la comisión de MercadoPago se aplica sobre el subtotal completo
-  // (libro + envío), no solo sobre el valor del libro.
   const mpFee = isMercadoPago(method)
-    ? Math.round(subtotal * STORE_CONFIG.MERCADOPAGO_PERCENT / 100)
+    ? Math.round((book + shipping) * STORE_CONFIG.MERCADOPAGO_PERCENT / 100)
     : 0;
 
-  return { book, shipping, subtotal, mpFee, total: subtotal + mpFee };
+  return { book, shipping, mpFee, total: book + shipping + mpFee };
 }
 
 function renderPaymentStatus() {

@@ -1,0 +1,88 @@
+<div style="font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif, Arial; font-size:14px; color:#fff7ec; padding:14px 8px; background-color:#0f0f0f;">
+  <div style="max-width:600px; margin:auto; background-color:#1b1712; border-radius:18px; overflow:hidden; border:1px solid #3b2a18;">
+    <div style="border-top:6px solid #f1c27d; padding:16px; background-color:#111111;">
+      <a style="text-decoration:none; outline:none; margin-right:8px; vertical-align:middle;" href="https://electronicagambino.com" target="_blank">
+        <img style="height:42px; vertical-align:middle;" height="42" src="https://i.ibb.co/B2MSPZBb/TAPIRBOOK.png" alt="TAPIR-BOOK" />
+      </a>
+      <span style="font-size:16px; vertical-align:middle; border-left:1px solid #f1c27d; padding-left:10px; color:#fff7ec;">
+        <strong>Confirmación de pedido</strong>
+      </span>
+    </div>
+
+    <div style="padding:0 16px 22px;">
+      <p style="color:#d7c4ac; line-height:1.6;">
+        Hola {customer_name}, recibimos tu pedido del libro <strong style="color:#f1c27d;">Mateando entre Almas</strong>.
+      </p>
+
+      <div style="text-align:left; font-size:14px; padding-bottom:8px; border-bottom:2px solid #f1c27d; color:#fff7ec;">
+        <strong>Pedido # {order_id}</strong>
+      </div>
+
+      {#orders}
+      <table style="width:100%; border-collapse:collapse;">
+        <tr style="vertical-align:top;">
+          <td style="padding:24px 8px 0 4px; display:inline-block; width:max-content;">
+            <img style="height:64px; width:48px; object-fit:cover; border-radius:8px;" height="64" src="{image_url}" alt="item" />
+          </td>
+          <td style="padding:24px 8px 0 8px; width:100%;">
+            <div style="color:#fff7ec;">{name}</div>
+            <div style="font-size:14px; color:#d7c4ac; padding-top:4px;">Cantidad: {units}</div>
+          </td>
+          <td style="padding:24px 4px 0 0; white-space:nowrap; color:#f1c27d;"><strong>${price}</strong></td>
+        </tr>
+      </table>
+      {/orders}
+
+      <div style="padding:24px 0;"><div style="border-top:2px solid #3b2a18;"></div></div>
+
+      <table style="border-collapse:collapse; width:100%; text-align:right; color:#d7c4ac;">
+        <tr><td style="width:55%;"></td><td>Envío Correo Argentino</td><td style="padding:8px; white-space:nowrap;">${cost.shipping}</td></tr>
+        <tr><td style="width:55%;"></td><td>Comisión MercadoPago</td><td style="padding:8px; white-space:nowrap;">${cost.mp_commission}</td></tr>
+        <tr>
+          <td style="width:55%;"></td>
+          <td style="border-top:2px solid #f1c27d; color:#fff7ec;"><strong style="white-space:nowrap;">Total</strong></td>
+          <td style="padding:16px 8px; border-top:2px solid #f1c27d; white-space:nowrap; color:#f1c27d;"><strong>${cost.total}</strong></td>
+        </tr>
+      </table>
+
+      <div style="margin-top:18px; padding:14px; background:#251b10; border:1px solid #5b3f1d; border-radius:14px;">
+        <p style="margin:0; color:#f1c27d; font-weight:800;">MercadoPago</p>
+        <p style="margin:8px 0 0; color:#d7c4ac; line-height:1.6;">
+          {mp_installments_note}
+        </p>
+      </div>
+
+      <div style="margin-top:24px; padding:16px; background:#111111; border:1px solid #3b2a18; border-radius:14px;">
+        <h3 style="margin:0 0 10px; color:#f1c27d;">Dirección registrada</h3>
+        <p style="margin:0; line-height:1.7; color:#d7c4ac;">
+          {customer_address}<br />
+          Barrio: {customer_neighborhood}<br />
+          Ciudad: {customer_city}<br />
+          Provincia: {customer_province}<br />
+          CP: {customer_postal_code}
+        </p>
+      </div>
+
+      <div style="margin-top:18px; padding:16px; background:#251b10; border:1px solid #5b3f1d; border-radius:14px;">
+        <h3 style="margin:0 0 10px; color:#f1c27d;">Plazos informados</h3>
+        <p style="margin:0; line-height:1.7; color:#d7c4ac;">
+          El despacho se realizará dentro de los 7 días por los plazos de producción.<br />
+          Transporte por Correo Argentino: 7 a 10 días.
+        </p>
+      </div>
+
+      <p style="margin-top:20px; color:#d7c4ac; line-height:1.7;">
+        Te enviaremos información de seguimiento cuando el pedido sea despachado.
+      </p>
+    </div>
+  </div>
+
+  <div style="max-width:600px; margin:auto;">
+    <p style="color:#999; line-height:1.6;">
+      El email fue enviado a {email}<br />
+      Recibiste este email porque realizaste un pedido en Libros FMG.<br />
+      © 2026 Libros FMG – Diseñado por
+      <a href="https://electronicagambino.com" style="color:#f1c27d; text-decoration:none;">Electrónica Gambino</a>
+    </p>
+  </div>
+</div>

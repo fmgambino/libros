@@ -17,15 +17,11 @@ function money(value) {
 function getTotals(method) {
   const book = STORE_CONFIG.BOOK_PRICE;
   const shipping = STORE_CONFIG.SHIPPING_PRICE;
-  const subtotal = book + shipping;
-
-  // IMPORTANTE: la comisión de MercadoPago se aplica sobre el subtotal completo
-  // (libro + envío), no solo sobre el valor del libro.
   const mpFee = method === "mercadopago"
-    ? Math.round(subtotal * STORE_CONFIG.MERCADOPAGO_PERCENT / 100)
+    ? Math.round(book * STORE_CONFIG.MERCADOPAGO_PERCENT / 100)
     : 0;
 
-  return { book, shipping, subtotal, mpFee, total: subtotal + mpFee };
+  return { book, shipping, mpFee, total: book + shipping + mpFee };
 }
 
 function openPaymentPopup() {
@@ -85,7 +81,7 @@ function openPaymentPopup() {
 }
 
 function openMercadoPagoExternalFlow() {
-  const seconds = Number(STORE_CONFIG.MERCADOPAGO_WAIT_SECONDS || 60);
+  const seconds = Number(STORE_CONFIG.MERCADOPAGO_WAIT_SECONDS || 10);
   let remaining = seconds;
   let intervalId = null;
 

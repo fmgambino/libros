@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin | Mateando entre Almas</title>
+  <link rel="icon" href="../assets/img/logo.png" />
+  <link rel="stylesheet" href="assets/admin.css?v=admin-v1" />
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+  <script defer src="../assets/js/config.js?v=admin-v1"></script>
+  <script defer src="assets/admin.js?v=admin-v1"></script>
+</head>
+<body>
+  <section id="loginView" class="login-shell">
+    <div class="login-card">
+      <img src="https://i.ibb.co/B2MSPZBb/TAPIRBOOK.png" alt="TAPIR-BOOK" class="login-logo" />
+      <p class="eyebrow">Backoffice</p>
+      <h1>Mateando entre Almas</h1>
+      <form id="loginForm" class="login-form">
+        <label>Usuario<input type="text" id="loginUser" autocomplete="username" value="fmgambino" required /></label>
+        <label>Contraseña<input type="password" id="loginPass" autocomplete="current-password" required /></label>
+        <button type="submit" class="btn primary full">Ingresar</button>
+      </form>
+      <p class="muted small">Usuario inicial: <strong>fmgambino</strong>. Cambiá la contraseña desde Mi Perfil.</p>
+    </div>
+  </section>
+
+  <section id="appView" class="app-shell hidden">
+    <aside id="sidebar" class="sidebar">
+      <div class="side-brand">
+        <img src="https://i.ibb.co/B2MSPZBb/TAPIRBOOK.png" alt="Logo" />
+        <div><strong>Mateando</strong><span>Backoffice</span></div>
+      </div>
+      <nav class="side-nav">
+        <button class="nav-btn active" data-module="dashboard"><svg viewBox="0 0 24 24"><path d="M4 13h7V4H4v9Zm9 7h7V4h-7v16ZM4 20h7v-5H4v5Z"/></svg><span>Dashboard</span></button>
+        <button class="nav-btn" data-module="orders"><svg viewBox="0 0 24 24"><path d="M6 3h12l2 4v14H4V7l2-4Zm1.2 4h9.6l-.8-2H8l-.8 2ZM7 11h10v2H7v-2Zm0 4h7v2H7v-2Z"/></svg><span>Pedidos</span></button>
+        <button class="nav-btn" data-module="users"><svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0 2c-4 0-7 2-7 4.5V20h14v-1.5C19 16 16 14 12 14Z"/></svg><span>Usuarios</span></button>
+        <button class="nav-btn" data-module="roles"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3Zm-1 14-4-4 1.4-1.4L11 13.2l5.6-5.6L18 9l-7 7Z"/></svg><span>Roles y Permisos</span></button>
+        <button class="nav-btn" data-module="profile"><svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Zm-9 9c.7-4 4.2-7 9-7s8.3 3 9 7H3Z"/></svg><span>Mi Perfil</span></button>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button id="collapseBtn" class="icon-btn" title="Colapsar menú"><svg viewBox="0 0 24 24"><path d="M4 6h16v2H4V6Zm0 5h16v2H4v-2Zm0 5h16v2H4v-2Z"/></svg></button>
+        <div><h2 id="moduleTitle">Dashboard</h2><p id="moduleSubtitle">Resumen general de ventas y pedidos.</p></div>
+        <div class="top-actions">
+          <button id="themeBtn" class="icon-btn" title="Modo claro/oscuro"><svg viewBox="0 0 24 24"><path d="M21 14.5A8 8 0 0 1 9.5 3a9 9 0 1 0 11.5 11.5Z"/></svg></button>
+          <button id="fullscreenBtn" class="icon-btn" title="Pantalla completa"><svg viewBox="0 0 24 24"><path d="M4 4h7v2H7.4L11 9.6 9.6 11 6 7.4V11H4V4Zm9 0h7v7h-2V7.4L14.4 11 13 9.6 16.6 6H13V4ZM4 13h2v3.6l3.6-3.6L11 14.4 7.4 18H11v2H4v-7Zm14 0h2v7h-7v-2h3.6L13 14.4l1.4-1.4 3.6 3.6V13Z"/></svg></button>
+          <button id="avatarBtn" class="avatar-btn" title="Cambiar foto"><img id="profileAvatar" src="https://i.ibb.co/7K8d4Tj/user-avatar.png" alt="Perfil" /></button>
+          <button id="logoutBtn" class="icon-btn danger" title="Salir"><svg viewBox="0 0 24 24"><path d="M10 17v-3H3v-4h7V7l5 5-5 5Zm2 3h7V4h-7V2h9v20h-9v-2Z"/></svg></button>
+        </div>
+      </header>
+
+      <section id="dashboardModule" class="module active">
+        <div class="cards-grid">
+          <article class="metric-card"><span>Total pedidos</span><strong id="statTotal">0</strong></article>
+          <article class="metric-card"><span>MercadoPago</span><strong id="statMp">0</strong></article>
+          <article class="metric-card"><span>Transferencias</span><strong id="statTransfer">0</strong></article>
+          <article class="metric-card warning"><span>Órdenes pendientes</span><strong id="statPending">0</strong></article>
+        </div>
+        <div class="panel"><h3>Últimos pedidos</h3><div class="table-wrap"><table><thead><tr><th>Pedido</th><th>Comprador</th><th>Método</th><th>Estado</th><th>Total</th></tr></thead><tbody id="recentOrdersBody"></tbody></table></div></div>
+      </section>
+
+      <section id="ordersModule" class="module">
+        <div class="panel">
+          <div class="toolbar">
+            <div><h3>Pedidos</h3><p>Gestioná estados, seguimiento, exportaciones y acciones masivas.</p></div>
+            <div class="toolbar-actions">
+              <select id="pageSizeSelect"><option>5</option><option selected>10</option><option>25</option><option>50</option><option>100</option><option>500</option><option>1000</option></select>
+              <button id="exportCsvBtn" class="btn">CSV</button>
+              <button id="exportPdfBtn" class="btn">PDF</button>
+              <button id="bulkStatusBtn" class="btn">Estado masivo</button>
+              <button id="bulkDeleteBtn" class="btn danger">Eliminar seleccionados</button>
+            </div>
+          </div>
+          <div class="table-wrap"><table class="data-table"><thead><tr><th><input type="checkbox" id="selectAllOrders" /></th><th>Pedido</th><th>Comprador</th><th>Email</th><th>Pago</th><th>Estado</th><th>Seguimiento</th><th>Total</th><th>Fecha</th><th>Acciones</th></tr></thead><tbody id="ordersBody"></tbody></table></div>
+          <div class="pagination"><button id="prevPageBtn" class="btn">← Atrás</button><span id="pageInfo">Página 1</span><button id="nextPageBtn" class="btn">Siguiente →</button></div>
+        </div>
+      </section>
+
+      <section id="usersModule" class="module"><div class="panel"><div class="toolbar"><div><h3>Usuarios</h3><p>Registro de usuarios del panel.</p></div><button id="newUserBtn" class="btn primary">Crear usuario</button></div><div class="table-wrap"><table><thead><tr><th>Usuario</th><th>Nombre</th><th>Email</th><th>Rol</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="usersBody"></tbody></table></div></div></section>
+
+      <section id="rolesModule" class="module"><div class="panel"><div class="toolbar"><div><h3>Roles y Permisos</h3><p>Creá perfiles y asigná permisos con checkbox.</p></div><button id="newRoleBtn" class="btn primary">Crear perfil</button></div><div id="rolesGrid" class="roles-grid"></div></div></section>
+
+      <section id="profileModule" class="module"><div class="panel profile-panel"><h3>Mi Perfil</h3><form id="profileForm" class="form-grid"><label>Nombre<input id="profileName" type="text" /></label><label>Email<input id="profileEmail" type="email" /></label><label>Foto de perfil URL<input id="profilePhoto" type="url" /></label><label>Nueva contraseña<input id="profilePassword" type="password" autocomplete="new-password" /></label><button class="btn primary" type="submit">Guardar cambios</button></form></div></section>
+
+      <footer>© 2026 F. M. Gambino · Mateando entre Almas by <a href="https://electronicagambino.com" target="_blank" rel="noopener">Electrónica Gambino</a></footer>
+    </main>
+  </section>
+
+  <input id="avatarFile" type="file" accept="image/*" hidden />
+</body>
+</html>

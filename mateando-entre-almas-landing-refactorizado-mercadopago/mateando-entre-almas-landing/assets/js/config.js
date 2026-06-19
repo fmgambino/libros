@@ -11,7 +11,7 @@ const STORE_CONFIG = {
   AUTHOR: "F. M. Gambino",
 
   // 👉 COLOCAR AQUÍ LA URL DE LA IMAGEN DEL LIBRO
-  BOOK_IMAGE_URL: "https://imagessl1.casadellibro.com/a/l/s7/01/9786313172801.webp",
+  BOOK_IMAGE_URL: "https://TU-DOMINIO.com/ruta/portada-mateando-entre-almas.jpg",
 
   BOOK_PRICE: 18000,
   SHIPPING_PRICE: 12000,

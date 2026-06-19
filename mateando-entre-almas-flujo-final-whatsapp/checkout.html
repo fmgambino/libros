@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout | Mateando entre Almas</title>
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script defer src="assets/js/config.js"></script>
+  <script defer src="assets/js/checkout.js"></script>
+</head>
+<body class="checkout-body">
+  <main class="checkout-wrapper">
+    <a href="index.html" class="back-link">← Volver</a>
+
+    <section class="checkout-card">
+      <p class="eyebrow">Pedido del libro</p>
+      <h1>Mateando entre Almas</h1>
+
+      <div id="paymentStatus"></div>
+      <div class="summary" id="orderSummary"></div>
+
+      <div class="bank-card" id="bankCard">
+        <div class="bank-logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M3 10.5L12 4l9 6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M5 10h14v9H5v-9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="M8 13h2M14 13h2M8 16h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <span>Datos para transferencia</span>
+          <strong>Banco ICBC</strong>
+          <p>Alias: FERNANDOMATA420YOYER</p>
+          <p>Titular: Ing. Fernando M. Gambino</p>
+          <p>CUIL: 20-34185420-4</p>
+        </div>
+      </div>
+
+      <div class="mp-card" id="mpCard">
+        <div class="mp-logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M4.2 10.4c1.9-3.1 5.2-4.8 7.8-4.8s5.9 1.7 7.8 4.8c.7 1.1.5 2.5-.5 3.4-2 1.8-4.6 2.8-7.3 2.8s-5.3-1-7.3-2.8c-1-.9-1.2-2.3-.5-3.4Z" fill="currentColor" opacity=".24"/>
+            <path d="M7.2 12.1c1.2 1.1 2.8 1.7 4.8 1.7s3.6-.6 4.8-1.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M8.3 10.8c.8-.7 1.7-1 2.7-.4l1 .6 1-.6c1-.6 1.9-.3 2.7.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 19.8c5.2 0 9.4-3.5 9.4-7.8S17.2 4.2 12 4.2 2.6 7.7 2.6 12s4.2 7.8 9.4 7.8Z" stroke="currentColor" stroke-width="1.8"/>
+          </svg>
+        </div>
+        <div>
+          <span>Pago online</span>
+          <strong>MercadoPago</strong>
+          <p>Completá tus datos de envío luego de abonar o generar el cupón de pago.</p>
+          <p>El precio incluye el recargo del 15% sobre el valor del libro.</p>
+        </div>
+      </div>
+
+      <form id="checkoutForm">
+        <div class="form-grid">
+          <label>Nombre y apellido<input type="text" name="fullName" required placeholder="Ej.: Fernando Gambino" /></label>
+          <label>WhatsApp<input type="tel" name="whatsapp" required placeholder="Ej.: 3816150488" /></label>
+          <label>Email<input type="email" name="email" required placeholder="tu@email.com" /></label>
+          <label>Domicilio<input type="text" name="address" required placeholder="Calle" /></label>
+          <label>Altura<input type="text" name="number" required placeholder="Ej.: 123" /></label>
+          <label>Ciudad<input type="text" name="city" required placeholder="Ej.: San Miguel de Tucumán" /></label>
+          <label>Provincia<input type="text" name="province" required placeholder="Ej.: Tucumán" /></label>
+          <label>Barrio<input type="text" name="neighborhood" required placeholder="Ej.: Centro" /></label>
+          <label>Código Postal<input type="text" name="postalCode" required placeholder="Ej.: 4000" /></label>
+        </div>
+
+        <div class="shipping-notice">
+          <strong>Información de producción y envío</strong>
+          <p>El despacho se realizará dentro de los 7 días por los plazos de producción.</p>
+          <p>Tiempo estimado de transporte por Correo Argentino: entre 7 y 10 días.</p>
+        </div>
+
+        <label class="terms-check">
+          <input type="checkbox" name="acceptTerms" required />
+          <span>He leído y acepto los plazos de producción, despacho y transporte informados.</span>
+        </label>
+
+        <button type="submit" class="primary-btn full">Confirmar pedido</button>
+      </form>
+
+      <p class="small-note">Al confirmar, se abrirá WhatsApp con el pedido listo para enviar al vendedor. Luego se preparará una copia por email.</p>
+    </section>
+  </main>
+</body>
+</html>

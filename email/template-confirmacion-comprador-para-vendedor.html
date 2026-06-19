@@ -1,0 +1,71 @@
+<div style="font-family: system-ui, sans-serif, Arial; font-size: 14px; color: #333; padding: 14px 8px; background-color: #f5f5f5;">
+  <div style="max-width: 600px; margin: auto; background-color: #fff;">
+    <div style="border-top: 6px solid #458500; padding: 16px;">
+      <a style="text-decoration: none; outline: none; margin-right: 8px; vertical-align: middle;" href="https://electronicagambino.com" target="_blank" rel="noopener">
+        <img style="height: 42px; vertical-align: middle; border: 0; outline: none; text-decoration: none;" src="https://i.ibb.co/B2MSPZBb/TAPIRBOOK.png" alt="TAPIR-BOOK" height="42">
+      </a>
+      <span style="font-size: 16px; vertical-align: middle; border-left: 1px solid #333; padding-left: 8px;">
+        <strong>&iexcl;NUEVO PEDIDO CONFIRMADO!</strong>
+      </span>
+    </div>
+
+    <div style="padding: 0 16px;">
+      <p>Te presentamos los detalles del nuevo pedido.</p>
+
+      <div style="background:#f8f8f8; border:1px solid #e6e6e6; border-radius:10px; padding:14px 16px; margin: 16px 0 18px;">
+        <h3 style="margin:0 0 10px; font-size:16px; color:#333;">Datos del comprador</h3>
+        <table style="width:100%; border-collapse:collapse; font-size:14px; color:#333;">
+          <tr><td style="padding:4px 0; width:150px;"><strong>Nombre:</strong></td><td style="padding:4px 0;">{{customer_name}}</td></tr>
+          <tr><td style="padding:4px 0;"><strong>Email:</strong></td><td style="padding:4px 0;"><a href="mailto:{{customer_email}}" style="color:#458500;">{{customer_email}}</a></td></tr>
+          <tr><td style="padding:4px 0;"><strong>WhatsApp:</strong></td><td style="padding:4px 0;">{{customer_whatsapp}}</td></tr>
+          <tr><td style="padding:4px 0;"><strong>Domicilio:</strong></td><td style="padding:4px 0;">{{customer_address}}</td></tr>
+          <tr><td style="padding:4px 0;"><strong>Barrio:</strong></td><td style="padding:4px 0;">{{customer_neighborhood}}</td></tr>
+          <tr><td style="padding:4px 0;"><strong>Ciudad:</strong></td><td style="padding:4px 0;">{{customer_city}}</td></tr>
+          <tr><td style="padding:4px 0;"><strong>Provincia:</strong></td><td style="padding:4px 0;">{{customer_province}}</td></tr>
+          <tr><td style="padding:4px 0;"><strong>C&oacute;digo Postal:</strong></td><td style="padding:4px 0;">{{customer_postal_code}}</td></tr>
+        </table>
+      </div>
+
+      <div style="background:#fff8e8; border:1px solid #f1dfb5; border-radius:10px; padding:14px 16px; margin: 0 0 18px;">
+        <h3 style="margin:0 0 10px; font-size:16px; color:#333;">Datos del pago</h3>
+        <p style="margin:0; line-height:1.6;">
+          <strong>M&eacute;todo:</strong> {{payment_method}}<br>
+          <strong>Estado:</strong> {{payment_status}}<br>
+          <strong>Fecha:</strong> {{order_date}}
+        </p>
+      </div>
+
+      <div style="text-align: left; font-size: 14px; padding-bottom: 4px; border-bottom: 2px solid #333;"><strong>Pedido N.&ordm; # {{order_id}}</strong></div>
+
+      {{#orders}}
+      <table style="width: 100%; border-collapse: collapse;">
+        <tbody>
+          <tr style="vertical-align: top;">
+            <td style="padding: 24px 8px 0 4px; display: inline-block; width: max-content;"><img style="height: 64px;" src="{{image_url}}" alt="item" height="64px"></td>
+            <td style="padding: 24px 8px 0 8px; width: 100%;">
+              <div>{{name}}</div>
+              <div style="font-size: 14px; color: #888; padding-top: 4px;">Cantidad: {{units}}</div>
+            </td>
+            <td style="padding: 24px 4px 0 0; white-space: nowrap;"><strong>${{price}}</strong></td>
+          </tr>
+        </tbody>
+      </table>
+      {{/orders}}
+
+      <div style="padding: 24px 0;"><div style="border-top: 2px solid #333;">&nbsp;</div></div>
+
+      <table style="border-collapse: collapse; width: 100%; text-align: right;">
+        <tbody>
+          <tr><td style="width: 47%;">&nbsp;</td><td style="width: 31%;">Correo Argentino</td><td style="padding: 8px; white-space: nowrap; width: 22%;">${{cost.shipping}}</td></tr>
+          <tr><td style="width: 47%;">&nbsp;</td><td style="width: 31%;">Comisi&oacute;n M&eacute;todo de Pago</td><td style="padding: 8px; white-space: nowrap; width: 22%;">${{cost.tax}}</td></tr>
+          <tr><td style="width: 47%;">&nbsp;</td><td style="border-top: 2px solid rgb(51, 51, 51); width: 31%;"><strong style="white-space: nowrap;">Total del pedido:</strong></td><td style="padding: 16px 8px; border-top: 2px solid rgb(51, 51, 51); white-space: nowrap; width: 22%;"><strong>${{cost.total}}</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div style="max-width: 600px; margin: auto;">
+    <p style="color: #999;">Este correo fue enviado al vendedor: {{email}}<br>El pedido corresponde al comprador: {{customer_email}}</p>
+    <p style="color: #999999; text-align: center;">&copy; 2026 F. M. Gambino &middot; Mateando entre Almas by <a href="https://electronicagambino.com" target="_blank" rel="noopener">Electr&oacute;nica Gambino</a></p>
+  </div>
+</div>

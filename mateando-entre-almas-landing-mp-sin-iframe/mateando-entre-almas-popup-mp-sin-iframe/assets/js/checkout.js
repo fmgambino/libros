@@ -21,20 +21,13 @@ function isPaidReturn() {
 }
 
 function money(value) {
-  return new Intl.NumberFormat("es-AR", {
-    style: "currency",
-    currency: "ARS",
-    maximumFractionDigits: 0
-  }).format(value);
+  return new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 0 }).format(value);
 }
 
 function getTotals(method) {
   const book = STORE_CONFIG.BOOK_PRICE;
   const shipping = STORE_CONFIG.SHIPPING_PRICE;
-  const mpFee = method === "mercadopago"
-    ? Math.round(book * STORE_CONFIG.MERCADOPAGO_PERCENT / 100)
-    : 0;
-
+  const mpFee = method === "mercadopago" ? Math.round(book * STORE_CONFIG.MERCADOPAGO_PERCENT / 100) : 0;
   return { book, shipping, mpFee, total: book + shipping + mpFee };
 }
 
@@ -44,14 +37,10 @@ function renderPaymentStatus() {
 
   const method = getMethod();
 
-  if (method === "mercadopago") {
-    statusBox.innerHTML = `
-      <div class="status-card success">
-        <strong>MercadoPago seleccionado</strong>
-        <p>Primero completá tus datos de envío. Luego serás enviado al checkout de MercadoPago.</p>
-        <p>El pedido no se enviará por WhatsApp hasta que finalices o nos avises el pago.</p>
-      </div>
-    `;
+  if (method === "mercadopago" && isPaidReturn()) {
+    statusBox.innerHTML = `<div class="status-card success"><strong>Continuar pedido MercadoPago</strong><p>Ahora completá tus datos de envío para enviar el pedido por WhatsApp y email.</p></div>`;
+  } else if (method === "mercadopago") {
+    statusBox.innerHTML = `<div class="status-card warning"><strong>MercadoPago seleccionado</strong><p>Completá tus datos de envío luego de abonar o generar el cupón.</p></div>`;
   }
 }
 
@@ -93,9 +82,7 @@ function handleOrder(event) {
   const order = {
     libro: STORE_CONFIG.BOOK_TITLE,
     metodo: method === "mercadopago" ? "MercadoPago" : "Transferencia",
-    estadoPago: method === "mercadopago"
-      ? "Pendiente de pago MercadoPago"
-      : "Pendiente de verificación de transferencia",
+    estadoPago: method === "mercadopago" && isPaidReturn() ? "Cliente continuó desde MercadoPago" : "Pendiente de verificación",
     total: money(totals.total),
     nombre: form.get("fullName"),
     whatsapp: cleanPhone(form.get("whatsapp")),
@@ -105,54 +92,21 @@ function handleOrder(event) {
     ciudad: form.get("city"),
     provincia: form.get("province"),
     barrio: form.get("neighborhood"),
-    cp: form.get("postalCode"),
-    createdAt: new Date().toISOString()
+    cp: form.get("postalCode")
   };
 
   const message = buildMessage(order, totals, method);
-
-  if (method === "mercadopago") {
-    localStorage.setItem("mateando_ultimo_pedido", JSON.stringify({
-      order,
-      message
-    }));
-
-    Swal.fire({
-      title: "Datos guardados",
-      html: `
-        <p>Tus datos de envío quedaron preparados.</p>
-        <p>Ahora vas a ser redirigido al checkout de MercadoPago.</p>
-        <p><strong>Importante:</strong> al finalizar el pago, enviá el comprobante por WhatsApp para coordinar el despacho.</p>
-      `,
-      icon: "success",
-      confirmButtonText: "Ir a MercadoPago"
-    }).then(() => {
-      window.location.href = STORE_CONFIG.MERCADOPAGO_CHECKOUT_URL;
-    });
-
-    return;
-  }
-
-  sendOrderByWhatsappAndEmail(message);
-}
-
-function sendOrderByWhatsappAndEmail(message) {
   const whatsappUrl = `https://wa.me/${STORE_CONFIG.SELLER_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   const mailtoUrl = `mailto:${STORE_CONFIG.SELLER_EMAIL}?subject=${encodeURIComponent("Nuevo pedido - Mateando entre Almas")}&body=${encodeURIComponent(message)}`;
 
   Swal.fire({
     title: "Pedido listo",
-    html: `
-      <p>Se abrirá WhatsApp para enviar el pedido al vendedor.</p>
-      <p>Luego se preparará una copia por email.</p>
-    `,
+    html: `<p>Se abrirá WhatsApp para enviar el pedido al vendedor.</p><p>Luego se preparará una copia por email.</p>`,
     icon: "success",
     confirmButtonText: "Enviar pedido"
   }).then(() => {
     window.open(whatsappUrl, "_blank");
-    setTimeout(() => {
-      window.location.href = mailtoUrl;
-    }, 900);
+    setTimeout(() => { window.location.href = mailtoUrl; }, 900);
   });
 }
 
